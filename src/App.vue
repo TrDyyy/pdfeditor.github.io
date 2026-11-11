@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, onBeforeUnmount, ref, shallowRef } from 'vue'
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist'
-import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
+import PdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?worker'
 import PdfPage from './components/PdfPage.vue'
 import SignatureDialog from './components/SignatureDialog.vue'
 import { prepareImage } from './imageFiles'
 import { exportPdf } from './pdfExport'
 import type { BinaryAsset, GraphicKind, GraphicObject, OverlayImage, PageModel, TextObject } from './types'
 
-GlobalWorkerOptions.workerSrc = workerUrl
+GlobalWorkerOptions.workerPort = new PdfWorker()
 const ScannerWorkspace = defineAsyncComponent(() => import('./features/scanner/components/ScannerWorkspace.vue'))
 
 const pdfInput = ref<HTMLInputElement | null>(null)
